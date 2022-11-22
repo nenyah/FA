@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationConfig>
+  <LoginParameters>
+    <StationNumber>ST1</StationNumber>
+    <Client>01</Client>
+    <RegistrationType>U</RegistrationType>
+    <PlantNo>01</PlantNo>
+    <LogInType>COM</LogInType>                <!-- USB or COM -->
+    <AUTH_TEAM></AUTH_TEAM>
+    <DBType>MySQL</DBType>                    <!-- 1.Oracle 2.SQL Server 3.MySQL -->
+    <Version>2</Version>                      <!-- 1:MES Version 9.51 以上 2:MES Version 9.51以下,仅仅针对使用的SQL Server数据库的 -->
+    <Merge>N</Merge>                          <!-- Y:Merge, N or Null: No Merge -->
+    <UploadRecipe>N</UploadRecipe>            <!-- Y:Upload, N or Null: No Upload -->
+    <Board_Module>M</Board_Module>            <!-- S:单板 M:双板 -->
+    <CUSTOM_CODE>TP</CUSTOM_CODE>              <!-- 客户代码 -->
+  </LoginParameters>
+  <ScannerParameters>
+    <SerialPort>COM1</SerialPort>             <!-- COM1/COM2/COM3 -->
+    <BaudRate>9600</BaudRate>
+    <Parity>0</Parity>
+    <StopBits>1</StopBits>
+    <DataBits>8</DataBits>
+    <NewLineSymbol>\r</NewLineSymbol>
+    <High>05 4F 55 54 01</High>
+    <Low>ESC[CESC[BESCOA0ESCIA#</Low>
+    <EndCommand>ESCIA!ESC[A</EndCommand>
+  </ScannerParameters>
+</ApplicationConfig>
