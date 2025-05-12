@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using com.amtec.action;
 using com.amtec.configurations;
-using com.itac.mes.imsapi.domain.container;
 using com.itac.mes.imsapi.client.dotnet;
-using com.amtec.forms;
-using System.Threading;
-using com.amtec.action;
-using SendPartno;
-
-namespace com.amtec.forms
+using com.itac.mes.imsapi.domain.container;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+namespace FA_COATING.com.amtec.forms
 {
     public partial class LoginForm : Form
     {
@@ -53,7 +45,7 @@ namespace com.amtec.forms
                 return;
             LogHelper.Info("Login start...");
             backgroundWorker1.RunWorkerAsync();
-            this.lblErrorMsg.Text = "Loading application....";
+            this.lblErrorMsg.Text = "登录中....";
             this.timer1.Start();
             SetControlStatus(false);
         }

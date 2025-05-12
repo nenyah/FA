@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ApplicationConfig>
   <LoginParameters>
-    <StationNumber>ST1</StationNumber>
+    <StationNumber>0001-1100-10</StationNumber>
     <Client>01</Client>
     <RegistrationType>U</RegistrationType>
     <PlantNo>01</PlantNo>
@@ -13,6 +13,7 @@
     <UploadRecipe>N</UploadRecipe>            <!-- Y:Upload, N or Null: No Upload -->
     <Board_Module>M</Board_Module>            <!-- S:单板 M:双板 -->
     <CUSTOM_CODE>TP</CUSTOM_CODE>              <!-- 客户代码 -->
+    <REGEX_PATTERN>^(\S+);(\S+)$|^(\S+)$</REGEX_PATTERN> <!--正则-->
   </LoginParameters>
   <ScannerParameters>
     <SerialPort>COM1</SerialPort>             <!-- COM1/COM2/COM3 -->
@@ -21,8 +22,8 @@
     <StopBits>1</StopBits>
     <DataBits>8</DataBits>
     <NewLineSymbol>\r</NewLineSymbol>
-    <High>05 4F 55 54 01</High>
-    <Low>ESC[CESC[BESCOA0ESCIA#</Low>
+    <High>50 41 53 53 5F 41 0D 0A</High>
+    <Low>45 52 52 4F 52 5F 41 0D 0A</Low>
     <EndCommand>ESCIA!ESC[A</EndCommand>
   </ScannerParameters>
 </ApplicationConfig>

@@ -73,6 +73,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ASSY.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonLibrary">
       <HintPath>..\Reference\CommonLibrary.dll</HintPath>
@@ -90,7 +93,7 @@
       <HintPath>..\Reference\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MESLibrary">
-      <HintPath>..\..\Amtec Tools\过站工具程序\ManualPassStation\bin\Debug\MESLibrary.dll</HintPath>
+      <HintPath>..\Reference\MESLibrary.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>.\MySql.Data.dll</HintPath>
@@ -146,6 +149,13 @@
     <Compile Include="com.amtec.forms\MainFrom.Designer.cs">
       <DependentUpon>MainFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="com.amtec.forms\MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.amtec.forms\MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="com.amtec.forms\MessageHelper.cs" />
     <Compile Include="com.amtec.SelectGW\SelectGW.cs" />
     <Compile Include="com.amtec.SQLConnect\DBConnection.cs" />
     <Compile Include="com.amtec.UpdateInsert\UpdateInsert.cs" />
@@ -163,16 +173,14 @@
     <EmbeddedResource Include="com.amtec.forms\MainFrom.resx">
       <DependentUpon>MainFrom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="com.amtec.forms\MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="ConfigFile.log4net">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -187,6 +195,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -196,7 +209,9 @@
   <ItemGroup>
     <Content Include="App.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tuopu-Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationConfig.xml">

@@ -1,33 +1,26 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using com.amtec.action;
+using com.amtec.configurations;
 using com.itac.mes.imsapi.client.dotnet;
 using com.itac.mes.imsapi.domain.container;
-using com.amtec.configurations;
-using com.amtec.model;
-using com.amtec.action;
+using Compal.MESComponent;
+using FA_COATING.com.amtec.Bean;
 using PartAssignment.com.amtec.SelectGW;
-using PartAssignment.com.amtec.Bean;
 using PartAssignment.com.amtec.UpdateInsert;
-using System.IO;
-using System.IO.Ports;
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
+using System.IO.Ports;
+using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
-using System.Net;
-using System.Threading;
 using System.Text.RegularExpressions;
-using Compal.MESComponent;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections;
-
-namespace SendPartno
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace FA_COATING.com.amtec.forms
 {
     public partial class Form1 : Form
     {
@@ -54,6 +47,8 @@ namespace SendPartno
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // 窗体标题显示版本信息
+            this.Text = @"三防漆 ( v" +Assembly.GetExecutingAssembly().GetName().Version+@" ) by steven";
             if (config.LogInType == "COM")
             {
                 serialPort.PortName = config.SerialPort;
@@ -70,9 +65,193 @@ namespace SendPartno
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(Serial_Received);
                 //serialPort.Close();
             }
+            // 在Form1.cs的Form1_Load事件中添加
+            MessageForm.ShowMessage("程序启动成功", false);
         }
 
         private void Serial_Received(object sender, SerialDataReceivedEventArgs e)
+        {
+            Task.Run(() => CheckNumberState(sender));
+        }
+        private async Task CheckNumberState(object sender)
+        {
+            SerialPort sp = (SerialPort)sender;
+
+            try
+            {
+                // 异步获取串口数据
+                int count = sp.BytesToRead;
+                byte[] buffer = new Byte[count];
+                sp.Read(buffer, 0, count);
+                if (count <= 0)
+                    return;
+                string s = Encoding.ASCII.GetString(buffer).Trim();
+                if (s.Length <= 0)
+                    return;
+                LogHelper.Info("收到扫描枪扫描信息: " + s);
+                // 更新this.textBox1显示为 s
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.textBox1.Text = s;
+                }));
+                // 使用正则 ^(.*);(.*)$|(.*)$ 校验字符串s,并取出分组值
+                //MatchCollection Matches = Regex.Matches(s, @"^(.*);(.*)$|^(.*)$");
+                MatchCollection Matches = Regex.Matches(s, config.REGEX_PATTERN);
+                // 没有匹配上，直接显示错误信息
+                if (Matches.Count <= 0)
+                {
+                    HandleError("扫描信息格式错误");
+                    return;
+                }
+                List<string> indata = new List<string>();
+                // 匹配上一组
+                if (Matches[0].Length<=22)
+                {
+                    indata.Add(Matches[0].Groups[0].Value);
+                }
+                else
+                {
+                    indata.Add(Matches[0].Groups[1].Value);
+                    indata.Add(Matches[0].Groups[2].Value);
+                }
+
+                // string[] indata = s.Trim().Split(new char[] { ';' }).Where(el => !string.IsNullOrEmpty(el)).ToArray();
+                string errMsg = await CheckItacStateAsync(indata);
+                if (errMsg.Length > 0)
+                {
+                    HandleError(errMsg);
+                    return;
+                }
+
+                // 验证成功，根据config.CUSTOM_CODE 是否等于 "TP" 进行烧录信息验证
+                if (config.CUSTOM_CODE == "TP")
+                {
+                    errMsg = await CheckBurnStateAsync(indata);
+                    if (errMsg.Length > 0)
+                    {
+                        HandleError(errMsg);
+                        return;
+                    }
+
+                }
+                // errMsg没有内容，则表示所有板子验证成功，上传过站信息
+                errMsg = await UploadState(indata);
+                if (errMsg.Length > 0)
+                {
+                    HandleError(errMsg);
+                    return;
+                }
+                // errMsg没有内容，则表示所有板子验证成功，上传过站信息
+                string successMsg = string.Join(",", indata.Where(el => !string.IsNullOrEmpty(el))) + "过站成功";
+                HandleSuccess(successMsg);
+            }
+            catch (Exception e)
+            {
+                LogHelper.Info("串口信息获取失败:" + e);
+            }
+
+        }
+        private void HandleSuccess(string errMsg)
+        {
+
+            this.Invoke(new MethodInvoker(delegate
+            {
+                ErrorMSG(errMsg);
+                LogHelper.Info(errMsg);
+                this.textBox1.Focus();
+                this.textBox1.SelectAll();
+                this.TransferSNTOCOM(config.High);
+                LogHelper.Info("发送Low指令:" + config.High);
+                // 新增：显示置顶窗体
+                MessageForm.ShowMessage(errMsg, false);
+            }));
+        }
+        private void HandleError(string errMsg)
+        {
+
+            this.Invoke(new MethodInvoker(delegate
+            {
+                ErrorMSG(errMsg);
+                LogHelper.Info(errMsg);
+                this.textBox1.Focus();
+                this.textBox1.SelectAll();
+                this.TransferSNTOCOM(config.Low);
+                LogHelper.Info("发送Low指令:" + config.Low);
+
+                // 新增：显示置顶窗体
+                MessageForm.ShowMessage(errMsg, true);
+            }));
+        }
+
+        private async Task<string> UploadState(List<string> indata)
+        {
+
+            string errMsg = "";
+            LogHelper.Info("所有板子验证成功，开始上传过站信息");
+            List<Task<int>> uploadTasks = indata.Select(snr => (Task.Run(() => this.trUploadState(config.StationNumber, snr, 2)))).ToList();
+            int[] uploadRes = await Task.WhenAll(uploadTasks);
+            for (int i = 0; i < uploadRes.Length; i++)
+            {
+                if (uploadRes[i] != 0)
+                {
+                    errMsg += "" + indata[i] + "过站失败!";
+                }
+            }
+            return errMsg;
+        }
+        private string CheckBurnState(List<string> indata)
+        {
+
+            string errMsg = "";
+            LogHelper.Info("开始验证板子烧录信息");
+            foreach (var snr in indata)
+            {
+                var err = this.selectGw.GetBurn(config.DBType, config.Version, snr);
+                if (err=="ERROR")
+                {
+                    errMsg += "" + snr + "序列号获取烧录失败!";
+
+                }
+            }
+            return errMsg;
+        }
+        private async Task<string> CheckBurnStateAsync(List<string> indata)
+        {
+
+            string errMsg = "";
+            LogHelper.Info("开始验证板子烧录信息");
+            List<Task<string>> burnTasks = indata.Select(snr => Task.Run(() => this.selectGw.GetBurnAsync(config.DBType, config.Version, snr))).ToList();
+            string[] burnRes = await Task.WhenAll(burnTasks);
+            // 校验结果，如果有任一一个值等于ERROR就显示失败信息
+            for (int i = 0; i < burnRes.Length; i++)
+            {
+                if (burnRes[i] == "ERROR")
+                {
+                    errMsg += "" + indata[i] + "序列号获取烧录失败!";
+                }
+            }
+            return errMsg;
+        }
+        private async Task<string> CheckItacStateAsync(List<string> indata)
+        {
+
+            string errMsg = "";
+            LogHelper.Info("校验板子状态: " + string.Join(",", indata));
+            List<Task<int>> tasks = indata.Select(snr => Task.Run(() => this.trCheckSerialNumberState(config.StationNumber, 2, 0, snr, "1"))).ToList();
+            // 分别验证板子的序列号
+            int[] res = await Task.WhenAll(tasks);
+            // 迭代校验结果，如果有任一一个值不是0就显示失败信息并退出
+            for (int i = 0; i < res.Length; i++)
+            {
+                if (res[i] != 0)
+                {
+                    errMsg += "" + indata[i] + "序列号校验失败!";
+                }
+            }
+            return errMsg;
+        }
+
+        private void CheckNumberStateOld(object sender)
         {
             SerialPort sp = (SerialPort)sender;
             try
@@ -80,7 +259,7 @@ namespace SendPartno
                 Thread.Sleep(200);
                 Byte[] bt = new Byte[sp.BytesToRead];
                 sp.Read(bt, 0, sp.BytesToRead);
-                string s = System.Text.Encoding.ASCII.GetString(bt).Trim();
+                string s = Encoding.ASCII.GetString(bt).Trim();
                 LogHelper.Info("收到扫描枪扫描信息: " + s);
                 this.Invoke(new MethodInvoker(delegate
                 {
@@ -266,7 +445,8 @@ namespace SendPartno
                     //richTextBox1.SelectionColor = Color.Red;
                     isSucces = "info";
                     errorBuilder = "# " + DateTime.Now.ToString("HH:mm:ss") + " >> " + isSucces + " >< " + "  " + logMessage + "\n";
-                    break; ;
+                    break;
+                    ;
             }
             this.Invoke(new MethodInvoker(delegate
             {
@@ -332,7 +512,7 @@ namespace SendPartno
             Decimal dData = 0.0M;
             if (strData.Contains("E"))
             {
-                dData = Convert.ToDecimal(Decimal.Parse(strData.ToString(), System.Globalization.NumberStyles.Float));
+                dData = Convert.ToDecimal(Decimal.Parse(strData.ToString(), NumberStyles.Float));
             }
             else
             {
@@ -359,7 +539,7 @@ namespace SendPartno
             LogHelper.Info("Api attribAppendAttributeValues error=" + error + ",object type=" + objectType + ",object number=" + objectNumber + ",object detail=" + objectDetail + ",attribute code=" + attributeCode);
             if (error == 0)
             {
-                LogHelper.Info(objectNumber + "对应的" + attributeCode  + "属性值为" + attributeValue);
+                LogHelper.Info(objectNumber + "对应的" + attributeCode + "属性值为" + attributeValue);
             }
             else
             {
@@ -447,9 +627,9 @@ namespace SendPartno
             LogHelper.Info("end api mlChangeMaterialBinData (errorcode = " + error + ")");
             return error;
         }
-        private void Form1_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            System.Environment.Exit(0);
+            Environment.Exit(0);
         }
 
         public int trCheckSerialNumberState(string station_number, int Player, int flag, string serial_number, string pos)
@@ -466,7 +646,7 @@ namespace SendPartno
             }
             else
             {
-                if (serialNumberStateResultValues != null || serialNumberStateResultValues.Length != 0)
+                if (serialNumberStateResultValues != null || serialNumberStateResultValues?.Length != 0)
                 {
                     string snr;
                     int err;
@@ -521,7 +701,7 @@ namespace SendPartno
             return error;
         }
 
-        public int trUploadState(string station_no, string serial_number,int Player)
+        public int trUploadState(string station_no, string serial_number, int Player)
         {
             int error = 0;
             string errorMsg = "";
@@ -629,17 +809,31 @@ namespace SendPartno
 
         private void SuccessMSG(string message)
         {
-            label1.Text = message;
-            label1.ForeColor = Color.Blue;
+            if (label1.InvokeRequired)
+            {
+                label1.Invoke(new Action(() => SuccessMSG(message)));
+            }
+            else
+            {
+                label1.Text = message;
+                label1.ForeColor = Color.Blue;
+            }
         }
 
         private void ErrorMSG(string message)
         {
-            label1.Text = message;
-            label1.ForeColor = Color.Red;
+            if (label1.InvokeRequired)
+            {
+                label1.Invoke(new Action(() => ErrorMSG(message)));
+            }
+            else
+            {
+                label1.Text = message;
+                label1.ForeColor = Color.Red;
+            }
         }
 
-        private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             ExecutionResult exeRes;
             exeRes = new ExecutionResult();
@@ -886,7 +1080,7 @@ namespace SendPartno
 
                 //char[] charArray;
                 //String tmpString = hsn.Trim();
-                
+
                 //if (tmpString == "")
                 //{
                 //    MessageBox.Show("sn is null");
@@ -932,4 +1126,4 @@ namespace SendPartno
             return array;
         }
     }
- }
+}

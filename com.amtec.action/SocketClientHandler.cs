@@ -1,14 +1,13 @@
-﻿using com.amtec.forms;
+﻿using FA_COATING.com.amtec.forms;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using SendPartno;
 namespace com.amtec.action
 {
-    class SocketClientHandler
+    public class SocketClientHandler
     {
         public TcpClient tcpc; //对服务器端建立TCP连接 
         public Socket tcpsend; //发送创建套接字 

@@ -1,19 +1,19 @@
 ﻿using System.Drawing;
-namespace SendPartno
+namespace FA_COATING.com.amtec.forms
 {
     class MessageHelper
     {
-        private Form1 _form1;
+        private readonly Form1 _form1;
         public MessageHelper(Form1 form1)
         {
             _form1 = form1;
         }
-        private void SuccessMSG(string message)
+        public void SuccessMsg(string message)
         {
             _form1.label1.Text = message;
             _form1.label1.ForeColor = Color.Blue;
         }
-        private void ErrorMSG(string message)
+        public void ErrorMsg(string message)
         {
             _form1.label1.Text = message;
             _form1.label1.ForeColor = Color.Red;

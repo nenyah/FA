@@ -66,6 +66,8 @@ namespace com.amtec.configurations
 
         public String CUSTOM_CODE { get; set; }
 
+        public string REGEX_PATTERN { get; set; }
+
         public ApplicationConfiguration()
         {
             string filePath = Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName;
@@ -97,6 +99,7 @@ namespace com.amtec.configurations
             EndCommand = GetParameterValues(config, "EndCommand");
             Board_Module = GetParameterValues(config, "Board_Module");
             CUSTOM_CODE = GetParameterValues(config, "CUSTOM_CODE");
+            REGEX_PATTERN = GetParameterValues(config, "REGEX_PATTERN");
         }
 
         private string GetParameterValues(XDocument config, string parameterName)
@@ -117,11 +120,7 @@ namespace com.amtec.configurations
         private int GetIntValue(string text)
         {
             int value = 0;
-            if (string.IsNullOrEmpty(text))
-            {
-
-            }
-            else
+            if (!string.IsNullOrEmpty(text))
             {
                 value = Convert.ToInt32(text);
             }
