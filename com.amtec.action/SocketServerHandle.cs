@@ -1,12 +1,8 @@
-﻿using com.amtec.configurations;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,7 +11,7 @@ namespace com.amtec.action
 {
     class SocketServerHandle
     {
-       // private IQCForm mv;
+        // private IQCForm mv;
         //public SocketServerHandle(IQCForm mv1)
         //{
         //    mv = mv1;
@@ -83,7 +79,7 @@ namespace com.amtec.action
             catch (Exception ex)
             {
                 LogHelper.Error(ex.Message + ";" + ex.StackTrace);
-               // mv.errorHandler(3, "ReadCallback error", "Error");
+                // mv.errorHandler(3, "ReadCallback error", "Error");
             }
         }
 
@@ -130,7 +126,7 @@ namespace com.amtec.action
             catch (Exception ex)
             {
                 LogHelper.Error(ex.Message + ";" + ex.StackTrace);
-               // mv.errorHandler(3, "Send heart package error", "Error");
+                // mv.errorHandler(3, "Send heart package error", "Error");
             }
         }
 

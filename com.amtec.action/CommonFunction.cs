@@ -9,7 +9,7 @@ namespace com.amtec.action
         private IMSApiSessionContextStruct sessionContext;
         private MainFrom view;
 
-        public CommonFunction(IMSApiSessionContextStruct sessionContext,  MainFrom view)
+        public CommonFunction(IMSApiSessionContextStruct sessionContext, MainFrom view)
         {
             this.sessionContext = sessionContext;
             this.view = view;

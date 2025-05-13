@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using com.itac.mes.imsapi.domain;
-using com.itac.mes.imsapi.domain.container;
+﻿using com.amtec.action;
 using com.itac.mes.imsapi.client.dotnet;
-using com.amtec.action;
+using com.itac.mes.imsapi.domain.container;
 using FA_COATING.com.amtec.forms;
 
 namespace com.amtec.configurations

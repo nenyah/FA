@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
+﻿using MySql.Data.MySqlClient;
 using System.Configuration;
 using System.Data.OracleClient;
 using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
 
 namespace com.amtec.SQLConnect
 {
@@ -41,7 +36,7 @@ namespace com.amtec.SQLConnect
             MySQLserverName = ConfigurationManager.AppSettings["MYSQLSERVERNAME"];
             //uid = ConfigurationManager.AppSettings["UID"];
             //pw = ConfigurationManager.AppSettings["PW"];
-            uid ="bde";
+            uid = "bde";
             pw = "bde_pwd";
         }
 

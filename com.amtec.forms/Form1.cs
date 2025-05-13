@@ -215,17 +215,24 @@ namespace FA_COATING.com.amtec.forms
         }
         private async Task<string> CheckBurnStateAsync(List<string> indata)
         {
+            if (indata.Count == 0)
+            {
+                return "烧录检查没有序列号信息传入!";
+            }
 
+            // 异步验证烧录状态
             string errMsg = "";
-            LogHelper.Info("开始验证板子烧录信息");
+            LogHelper.Info("Verify Burn Status");
             List<Task<string>> burnTasks = indata.Select(snr => Task.Run(() => this.selectGw.GetBurnAsync(config.DBType, config.Version, snr))).ToList();
             string[] burnRes = await Task.WhenAll(burnTasks);
-            // 校验结果，如果有任一一个值等于ERROR就显示失败信息
-            for (int i = 0; i < burnRes.Length; i++)
+            // Validate the results: if any value equals "ERROR", 
+            // display a failure message indicating that the burn status retrieval failed 
+            // for the corresponding serial number.
+            foreach (var pair in Enumerable.Zip(indata, burnRes, (snr, result) => (snr, result)))
             {
-                if (burnRes[i] == "ERROR")
+                if (pair.result == "ERROR")
                 {
-                    errMsg += "" + indata[i] + "序列号获取烧录失败!";
+                    errMsg += pair.snr + "序列号获取烧录信息失败!";
                 }
             }
             return errMsg;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FA_COATING.com.amtec.forms;
+using System;
 using System.Windows.Forms;
-using ASSY;
-using FA_COATING.com.amtec.forms;
 
 namespace ASSY
 {

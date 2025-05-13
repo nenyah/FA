@@ -1,6 +1,5 @@
 ﻿using FA_COATING.com.amtec.forms;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -35,12 +34,12 @@ namespace com.amtec.action
                 //view.errorHandler(0, "Start Server connection. IP:" + remotepoint.Address + " Port:" + remotepoint.Port, "");
                 LogHelper.Info("Start Server connection. IP:" + remotepoint.Address + " Port:" + remotepoint.Port);
                 tcpsend.BeginConnect(end, new AsyncCallback(ConnectedCallback), tcpsend); //调用回调函数
-                //connectDone.WaitOne();
-               return true;
+                                                                                          //connectDone.WaitOne();
+                return true;
             }
             catch
             {
-                view.errorHandler(1,"server connect fail");
+                view.errorHandler(1, "server connect fail");
                 return false;
             }
         }
@@ -53,7 +52,7 @@ namespace com.amtec.action
                 client.EndConnect(ar);
                 view.errorHandler(0, "server connect success");
                 LogHelper.Info("连接服务器成功");
-                
+
             }
             catch (Exception ex)
             {
@@ -86,9 +85,9 @@ namespace com.amtec.action
         {
             try
             {
-                
+
                 send(message);
-               // view.errorHandler(0, "send success", "");
+                // view.errorHandler(0, "send success", "");
                 //readDone.Reset();
                 byte[] back = new byte[1024 * 1024];
                 int count = tcpsend.Receive((back));

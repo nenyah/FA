@@ -40,7 +40,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -48,11 +48,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -68,7 +69,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -76,11 +77,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -96,7 +98,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -104,11 +106,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -124,27 +127,13 @@ namespace PartAssignment.com.amtec.SelectGW
         {
             exeRes.Status = true;
             DataSet ds = new DataSet();
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"delete from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"delete from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -153,11 +142,27 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"delete from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -174,7 +179,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -182,11 +187,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -204,7 +210,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -212,11 +218,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -229,13 +236,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string burn = string.Empty;
-            if(dbType == "MySQL")
+            if (dbType == "MySQL")
             {
                 string sql = @"select node_data from ict where  serialNum = '" + hsn + "' and result=1 order by date_time limit 1";
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = con;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -245,10 +252,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 command.Connection.Close();
             }
 
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 burn = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 burn = "ERROR";
@@ -262,17 +270,17 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string burn = string.Empty;
-            if(dbType == "MySQL")
+            if (dbType == "MySQL")
             {
                 string sql = @"select node_data from ict where  serialNum = '" + hsn + "' and result=1 order by date_time limit 1";
 
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = con;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     await command.Connection.OpenAsync();
                 }
-                using(MySqlDataAdapter dataAdapter = new MySqlDataAdapter())
+                using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter())
                 {
                     dataAdapter.SelectCommand = command;
                     dataAdapter.SelectCommand.CommandText = sql;
@@ -281,10 +289,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 command.Connection.Close();
             }
 
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 burn = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 burn = "ERROR";
@@ -298,7 +307,7 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string eol = string.Empty;
-            if(dbType == "MySQL")
+            if (dbType == "MySQL")
             {
                 string sql = @"select node_data from normaltest where serialNum = '" +
                     hsn +
@@ -306,7 +315,7 @@ namespace PartAssignment.com.amtec.SelectGW
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = con;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -316,10 +325,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 command.Connection.Close();
             }
 
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 eol = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 eol = "ERROR";
@@ -333,7 +343,7 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string high = string.Empty;
-            if(dbType == "MySQL")
+            if (dbType == "MySQL")
             {
                 string sql = @"select node_data from hightemtest where serialNum = '" +
                     hsn +
@@ -341,7 +351,7 @@ namespace PartAssignment.com.amtec.SelectGW
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = con;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -351,10 +361,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 command.Connection.Close();
             }
 
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 high = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 high = "ERROR";
@@ -371,7 +382,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -379,11 +390,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -399,7 +411,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -407,11 +419,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -427,7 +440,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -435,11 +448,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -452,7 +466,7 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string group_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"SELECT LAGER_GRP_ID FROM ML.LAGER_GRP WHERE LAGER_GRP_NR = '" +
                     group_no +
@@ -462,7 +476,7 @@ namespace PartAssignment.com.amtec.SelectGW
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -470,7 +484,8 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.SelectCommand.CommandText = sql;
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
-            } else if(dbType == "Oracle")
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = @"SELECT LAGER_GRP_ID FROM ML.LAGER_GRP WHERE LAGER_GRP_NR = '" +
                     group_no +
@@ -480,7 +495,7 @@ namespace PartAssignment.com.amtec.SelectGW
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -489,10 +504,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 group_id = ds.Tables[0].Rows[0]["LAGER_GRP_ID"].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -505,29 +521,15 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string lag_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
-                if(Version == "1")
+                if (Version == "1")
                 {
                     string sql = @"SELECT NEXT VALUE FOR ML.SEQ_LAGERORT";
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand();
                     command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
-                    {
-                        command.Connection.Open();
-                    }
-                    dataAdapter.SelectCommand = command;
-                    dataAdapter.SelectCommand.CommandText = sql;
-                    dataAdapter.Fill(ds);
-                    command.Connection.Close();
-                } else if(Version == "2")
-                {
-                    string sql = @"SELECT ID_VALUE + 1 From ML.SEQ_LAGERORT where ID_NAME = 'SEQ_LAGERORT'";
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
+                    if (!(command.Connection.State == ConnectionState.Open))
                     {
                         command.Connection.Open();
                     }
@@ -536,13 +538,29 @@ namespace PartAssignment.com.amtec.SelectGW
                     dataAdapter.Fill(ds);
                     command.Connection.Close();
                 }
-            } else if(dbType == "Oracle")
+                else if (Version == "2")
+                {
+                    string sql = @"SELECT ID_VALUE + 1 From ML.SEQ_LAGERORT where ID_NAME = 'SEQ_LAGERORT'";
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = conn;
+                    if (!(command.Connection.State == ConnectionState.Open))
+                    {
+                        command.Connection.Open();
+                    }
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.SelectCommand.CommandText = sql;
+                    dataAdapter.Fill(ds);
+                    command.Connection.Close();
+                }
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = @"SELECT ML.SEQ_LAGERORT.NEXTVAL from dual";
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -551,10 +569,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 lag_id = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -567,29 +586,15 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string location_lag_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
-                if(Version == "1")
+                if (Version == "1")
                 {
                     string sql = @"SELECT LAGER_ID FROM ML.LAGERORT L WHERE L.LAGER_NR = '" + location + "'";
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand();
                     command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
-                    {
-                        command.Connection.Open();
-                    }
-                    dataAdapter.SelectCommand = command;
-                    dataAdapter.SelectCommand.CommandText = sql;
-                    dataAdapter.Fill(ds);
-                    command.Connection.Close();
-                } else if(Version == "2")
-                {
-                    string sql = @"SELECT LAGER_ID FROM ML.LAGERORT L WHERE L.LAGER_NR = '" + location + "'";
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
+                    if (!(command.Connection.State == ConnectionState.Open))
                     {
                         command.Connection.Open();
                     }
@@ -598,13 +603,29 @@ namespace PartAssignment.com.amtec.SelectGW
                     dataAdapter.Fill(ds);
                     command.Connection.Close();
                 }
-            } else if(dbType == "Oracle")
+                else if (Version == "2")
+                {
+                    string sql = @"SELECT LAGER_ID FROM ML.LAGERORT L WHERE L.LAGER_NR = '" + location + "'";
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = conn;
+                    if (!(command.Connection.State == ConnectionState.Open))
+                    {
+                        command.Connection.Open();
+                    }
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.SelectCommand.CommandText = sql;
+                    dataAdapter.Fill(ds);
+                    command.Connection.Close();
+                }
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = @"SELECT LAGER_ID FROM ML.LAGERORT L WHERE L.LAGER_NR = '" + location + "'";
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -613,10 +634,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 location_lag_id = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 location_lag_id = "ERROR";
@@ -633,7 +655,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -641,11 +663,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -663,7 +686,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -671,11 +694,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -693,7 +717,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -701,11 +725,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -728,7 +753,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -736,11 +761,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -758,7 +784,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -766,11 +792,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -783,29 +810,15 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string part_lag_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
-                if(Version == "1")
+                if (Version == "1")
                 {
                     string sql = @"SELECT A.DEFAULT_LAGER_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand();
                     command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
-                    {
-                        command.Connection.Open();
-                    }
-                    dataAdapter.SelectCommand = command;
-                    dataAdapter.SelectCommand.CommandText = sql;
-                    dataAdapter.Fill(ds);
-                    command.Connection.Close();
-                } else if(Version == "2")
-                {
-                    string sql = @"SELECT A.DEFAULT_LAGER_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
+                    if (!(command.Connection.State == ConnectionState.Open))
                     {
                         command.Connection.Open();
                     }
@@ -814,13 +827,29 @@ namespace PartAssignment.com.amtec.SelectGW
                     dataAdapter.Fill(ds);
                     command.Connection.Close();
                 }
-            } else if(dbType == "Oracle")
+                else if (Version == "2")
+                {
+                    string sql = @"SELECT A.DEFAULT_LAGER_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = conn;
+                    if (!(command.Connection.State == ConnectionState.Open))
+                    {
+                        command.Connection.Open();
+                    }
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.SelectCommand.CommandText = sql;
+                    dataAdapter.Fill(ds);
+                    command.Connection.Close();
+                }
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = @"SELECT A.DEFAULT_LAGER_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -829,10 +858,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 part_lag_id = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 part_lag_id = "ERROR";
@@ -846,27 +876,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string cout;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"select * from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"select * from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -875,10 +891,26 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"select * from ml.ADIS_LAGER WHERE OBJECT_ID = '" + part_object_id + "'";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 cout = "OK";
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 cout = "NG";
@@ -895,7 +927,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -903,11 +935,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -920,29 +953,15 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string part_object_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
-                if(Version == "1")
+                if (Version == "1")
                 {
                     string sql = @"SELECT A.OBJECT_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand();
                     command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
-                    {
-                        command.Connection.Open();
-                    }
-                    dataAdapter.SelectCommand = command;
-                    dataAdapter.SelectCommand.CommandText = sql;
-                    dataAdapter.Fill(ds);
-                    command.Connection.Close();
-                } else if(Version == "2")
-                {
-                    string sql = @"SELECT A.OBJECT_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
+                    if (!(command.Connection.State == ConnectionState.Open))
                     {
                         command.Connection.Open();
                     }
@@ -951,13 +970,29 @@ namespace PartAssignment.com.amtec.SelectGW
                     dataAdapter.Fill(ds);
                     command.Connection.Close();
                 }
-            } else if(dbType == "Oracle")
+                else if (Version == "2")
+                {
+                    string sql = @"SELECT A.OBJECT_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = conn;
+                    if (!(command.Connection.State == ConnectionState.Open))
+                    {
+                        command.Connection.Open();
+                    }
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.SelectCommand.CommandText = sql;
+                    dataAdapter.Fill(ds);
+                    command.Connection.Close();
+                }
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = @"SELECT A.OBJECT_ID FROM GLO.ADIS A WHERE A.ARTIKEL = '" + part_no + "'";
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -966,10 +1001,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 part_object_id = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 part_object_id = "ERROR";
@@ -983,13 +1019,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string pcb_sn = string.Empty;
-            if(dbType == "MySQL")
+            if (dbType == "MySQL")
             {
                 string sql = @"SELECT bindingSerialNum FROM maketag WHERE serialNum =  '" + hsn + "'";
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = con;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -999,10 +1035,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 command.Connection.Close();
             }
 
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 pcb_sn = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
                 pcb_sn = "ERROR";
@@ -1016,32 +1053,16 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string seq_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
-                if(Version == "1")
+                if (Version == "1")
                 {
                     string tempName = "x" + sequenceName;
                     string sql = string.Format("SELECT next value for {0}", tempName);
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand();
                     command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
-                    {
-                        command.Connection.Open();
-                    }
-                    dataAdapter.SelectCommand = command;
-                    dataAdapter.SelectCommand.CommandText = sql;
-                    dataAdapter.Fill(ds);
-                    command.Connection.Close();
-                } else if(Version == "2")
-                {
-                    string tempName = "x" + sequenceName;
-                    string[] strs = tempName.Split(new char[] { '.' });
-                    string sql = string.Format("select ID_VALUE from {0} where ID_NAME='{1}'", tempName, strs[1]);
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = conn;
-                    if(!(command.Connection.State == ConnectionState.Open))
+                    if (!(command.Connection.State == ConnectionState.Open))
                     {
                         command.Connection.Open();
                     }
@@ -1050,13 +1071,31 @@ namespace PartAssignment.com.amtec.SelectGW
                     dataAdapter.Fill(ds);
                     command.Connection.Close();
                 }
-            } else if(dbType == "Oracle")
+                else if (Version == "2")
+                {
+                    string tempName = "x" + sequenceName;
+                    string[] strs = tempName.Split(new char[] { '.' });
+                    string sql = string.Format("select ID_VALUE from {0} where ID_NAME='{1}'", tempName, strs[1]);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = conn;
+                    if (!(command.Connection.State == ConnectionState.Open))
+                    {
+                        command.Connection.Open();
+                    }
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.SelectCommand.CommandText = sql;
+                    dataAdapter.Fill(ds);
+                    command.Connection.Close();
+                }
+            }
+            else if (dbType == "Oracle")
             {
                 string sql = string.Format("SELECT {0}.NEXTVAL FROM dual", sequenceName);
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1065,10 +1104,11 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 seq_id = ds.Tables[0].Rows[0][0].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1081,27 +1121,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string state_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"SELECT ID FROM ML.STORAGE_STATE WHERE CODE = 'F' and plant_id = '3000000'";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"SELECT ID FROM ML.STORAGE_STATE WHERE CODE = 'F' and plant_id = '3000000'";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1110,10 +1136,26 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"SELECT ID FROM ML.STORAGE_STATE WHERE CODE = 'F' and plant_id = '3000000'";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 state_id = ds.Tables[0].Rows[0]["ID"].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1126,12 +1168,12 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string sql = @"SELECT CELL_NUMBER FROM ml.storage_cell where CELL_NUMBER <> 'Dummy' order by CELL_NUMBER";
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1140,12 +1182,12 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(dbType == "Oracle")
+            if (dbType == "Oracle")
             {
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1154,11 +1196,12 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1171,7 +1214,7 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string cell_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"select ID from ml.STORAGE_CELL where CELL_NUMBER = '" +
                     cell_no +
@@ -1179,23 +1222,7 @@ namespace PartAssignment.com.amtec.SelectGW
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"select ID from ml.STORAGE_CELL where CELL_NUMBER = '" +
-                    cell_no +
-                    "' AND PLANT_ID = '3000000'";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1204,10 +1231,28 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"select ID from ml.STORAGE_CELL where CELL_NUMBER = '" +
+                    cell_no +
+                    "' AND PLANT_ID = '3000000'";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 cell_id = ds.Tables[0].Rows[0]["ID"].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1222,12 +1267,12 @@ namespace PartAssignment.com.amtec.SelectGW
             string sql = @"SELECT LAGER_GRP_NR FROM ML.LAGER_GRP WHERE STORAGE_CELL_ID IN (SELECT ID FROM ml.storage_cell WHERE CELL_NUMBER = '" +
                 cell_id +
                 "')";
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1236,12 +1281,12 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(dbType == "Oracle")
+            if (dbType == "Oracle")
             {
                 OracleDataAdapter dataAdapter = new OracleDataAdapter();
                 OracleCommand command = new OracleCommand();
                 command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1250,11 +1295,12 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1267,27 +1313,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string type_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"SELECT ID FROM ML.STORAGE_TYPE WHERE CODE = 'M' and plant_id = '3000000'";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"SELECT ID FROM ML.STORAGE_TYPE WHERE CODE = 'M' and plant_id = '3000000'";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1296,10 +1328,26 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"SELECT ID FROM ML.STORAGE_TYPE WHERE CODE = 'M' and plant_id = '3000000'";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 type_id = ds.Tables[0].Rows[0]["ID"].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1312,27 +1360,13 @@ namespace PartAssignment.com.amtec.SelectGW
             exeRes.Status = true;
             DataSet ds = new DataSet();
             string user_id = string.Empty;
-            if(dbType == "SQL Server")
+            if (dbType == "SQL Server")
             {
                 string sql = @"SELECT PERS_ID FROM BDE.PERS_STAMM WHERE BDE_USERID = 'ADMIN' and werk_id= '3000000'";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter();
                 SqlCommand command = new SqlCommand();
                 command.Connection = conn;
-                if(!(command.Connection.State == ConnectionState.Open))
-                {
-                    command.Connection.Open();
-                }
-                dataAdapter.SelectCommand = command;
-                dataAdapter.SelectCommand.CommandText = sql;
-                dataAdapter.Fill(ds);
-                command.Connection.Close();
-            } else if(dbType == "Oracle")
-            {
-                string sql = @"SELECT PERS_ID FROM BDE.PERS_STAMM WHERE BDE_USERID = 'ADMIN' and werk_id= '3000000";
-                OracleDataAdapter dataAdapter = new OracleDataAdapter();
-                OracleCommand command = new OracleCommand();
-                command.Connection = oraconn;
-                if(!(command.Connection.State == ConnectionState.Open))
+                if (!(command.Connection.State == ConnectionState.Open))
                 {
                     command.Connection.Open();
                 }
@@ -1341,10 +1375,26 @@ namespace PartAssignment.com.amtec.SelectGW
                 dataAdapter.Fill(ds);
                 command.Connection.Close();
             }
-            if(ds.Tables[0].Rows.Count > 0)
+            else if (dbType == "Oracle")
+            {
+                string sql = @"SELECT PERS_ID FROM BDE.PERS_STAMM WHERE BDE_USERID = 'ADMIN' and werk_id= '3000000";
+                OracleDataAdapter dataAdapter = new OracleDataAdapter();
+                OracleCommand command = new OracleCommand();
+                command.Connection = oraconn;
+                if (!(command.Connection.State == ConnectionState.Open))
+                {
+                    command.Connection.Open();
+                }
+                dataAdapter.SelectCommand = command;
+                dataAdapter.SelectCommand.CommandText = sql;
+                dataAdapter.Fill(ds);
+                command.Connection.Close();
+            }
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 user_id = ds.Tables[0].Rows[0]["PERS_ID"].ToString();
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1360,7 +1410,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -1368,11 +1418,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }
@@ -1388,7 +1439,7 @@ namespace PartAssignment.com.amtec.SelectGW
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
             command.Connection = oraconn;
-            if(!(command.Connection.State == ConnectionState.Open))
+            if (!(command.Connection.State == ConnectionState.Open))
             {
                 command.Connection.Open();
             }
@@ -1396,11 +1447,12 @@ namespace PartAssignment.com.amtec.SelectGW
             dataAdapter.SelectCommand.CommandText = sql;
             dataAdapter.Fill(ds);
             command.Connection.Close();
-            if(ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 exeRes.Anything = ds;
                 exeRes.Status = true;
-            } else
+            }
+            else
             {
                 exeRes.Status = false;
             }

@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Compal.MESComponent;
+﻿using com.amtec.SQLConnect;
 using com.itac.mes.imsapi.client.dotnet;
 using com.itac.mes.imsapi.domain.container;
-using com.amtec.action;
-using com.amtec.configurations;
-using com.amtec.SQLConnect;
+using Compal.MESComponent;
 using FA_COATING.com.amtec.Bean;
-using System.IO;
-using System.Reflection;
-using System.IO.Ports;
-using System.Threading;
+using System;
+using System.Data;
 using System.Data.OracleClient;
 using System.Data.SqlClient;
 
@@ -44,7 +32,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
 
         }
 
-        public ExecutionResult InsertPartAssign(int seqno, int id, int obj,double qty,int packobj)
+        public ExecutionResult InsertPartAssign(int seqno, int id, int obj, double qty, int packobj)
         {
 
             ExecutionResult exeRes = new ExecutionResult();
@@ -116,7 +104,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
         {
             ExecutionResult exeRes = new ExecutionResult();
             DataSet ds = new DataSet();
-            string sql = @"update GLO.PROZ G SET G.RUEST_FLAG='"+ updateflag +"' WHERE G.RUEST_FLAG='Y'";
+            string sql = @"update GLO.PROZ G SET G.RUEST_FLAG='" + updateflag + "' WHERE G.RUEST_FLAG='Y'";
             OracleTransaction transaction = null;
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
@@ -146,10 +134,10 @@ namespace PartAssignment.com.amtec.UpdateInsert
             }
 
             return exeRes;
- 
+
         }
 
-        public ExecutionResult updateMaID(string m_id,string ma_grp_nr,string ma_grp_typ)
+        public ExecutionResult updateMaID(string m_id, string ma_grp_nr, string ma_grp_typ)
         {
             ExecutionResult exeRes = new ExecutionResult();
             DataSet ds = new DataSet();
@@ -266,7 +254,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
         {
             ExecutionResult exeRes = new ExecutionResult();
             DataSet ds = new DataSet();
-            string sql = @"update bde.v_auft v set v.bea_status='E' where v.charge_ext='"+ mo + "'";
+            string sql = @"update bde.v_auft v set v.bea_status='E' where v.charge_ext='" + mo + "'";
             OracleTransaction transaction = null;
             OracleDataAdapter dataAdapter = new OracleDataAdapter();
             OracleCommand command = new OracleCommand();
@@ -376,7 +364,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
         {
             ExecutionResult exeRes = new ExecutionResult();
             DataSet ds = new DataSet();
-            string sql = @"update  ML.SEQ_LAGERORT set ID_VALUE = '"+ lag_id + "' where ID_NAME = 'SEQ_LAGERORT'";
+            string sql = @"update  ML.SEQ_LAGERORT set ID_VALUE = '" + lag_id + "' where ID_NAME = 'SEQ_LAGERORT'";
             SqlTransaction transaction = null;
             SqlDataAdapter dataAdapter = new SqlDataAdapter();
             SqlCommand command = new SqlCommand();
@@ -408,7 +396,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
             return exeRes;
         }
 
-        public ExecutionResult InsertLocation(string dbtype,string location_no,string location_desc,string user_id,string type_id,string state_id,string lag_id,string group_id)
+        public ExecutionResult InsertLocation(string dbtype, string location_no, string location_desc, string user_id, string type_id, string state_id, string lag_id, string group_id)
         {
 
             ExecutionResult exeRes = new ExecutionResult();
@@ -502,7 +490,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
             return exeRes;
         }
 
-        public ExecutionResult InsertPartLocation(string dbtype, string part_no, string location,string part_object_id)
+        public ExecutionResult InsertPartLocation(string dbtype, string part_no, string location, string part_object_id)
         {
 
             ExecutionResult exeRes = new ExecutionResult();
@@ -528,7 +516,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
                         string sql = null;
 
                         sql = @"insert into ml.ADIS_LAGER(CLIENT_ID,COMPANY_ID,CREATED,LAGER_ID,LFD_NR,OBJECT_ID,STAMP,USER_ID,WERK_ID) 
-                                VALUES('1','1','"+date1+"','" + location + "','0','" + part_object_id + "','"+date2+"','1','3000000')";
+                                VALUES('1','1','" + date1 + "','" + location + "','0','" + part_object_id + "','" + date2 + "','1','3000000')";
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
                         transaction.Commit();
@@ -566,7 +554,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
                         string sql = null;
 
                         sql = @"insert into ml.ADIS_LAGER(CLIENT_ID,COMPANY_ID,CREATED,LAGER_ID,LFD_NR,OBJECT_ID,STAMP,USER_ID,WERK_ID) 
-                                VALUES('1','1',GETDATE(),'" + location + "','0','"+part_object_id+"',GETDATE(),'1','3000000')";
+                                VALUES('1','1',GETDATE(),'" + location + "','0','" + part_object_id + "',GETDATE(),'1','3000000')";
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
                         transaction.Commit();
@@ -616,7 +604,7 @@ namespace PartAssignment.com.amtec.UpdateInsert
 
                         string sql = null;
 
-                        sql = @"update GLO.ADIS  set DEFAULT_LAGER_ID = '"+ location+"' WHERE ARTIKEL = '"+ part_no+"'";
+                        sql = @"update GLO.ADIS  set DEFAULT_LAGER_ID = '" + location + "' WHERE ARTIKEL = '" + part_no + "'";
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
                         transaction.Commit();

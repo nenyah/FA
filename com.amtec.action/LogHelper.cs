@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
+﻿using log4net;
+using System;
 using System.IO;
-using log4net;
+using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace com.amtec.action
@@ -16,9 +14,9 @@ namespace com.amtec.action
         {
             string filePath = Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName;
             string _appDir = Path.GetDirectoryName(filePath);
-            XDocument config = XDocument.Load(_appDir+@"\ApplicationConfig.xml");
+            XDocument config = XDocument.Load(_appDir + @"\ApplicationConfig.xml");
             string stationNumber = config.Descendants("StationNumber").First().Value;
-           
+
             log4net.GlobalContext.Properties["LogPath"] = @"C:\iTAC_Log";//_appDir + @"\log"; 
             log4net.GlobalContext.Properties["LogName"] = stationNumber + "_1.log";
             log4net.Config.XmlConfigurator.Configure();
