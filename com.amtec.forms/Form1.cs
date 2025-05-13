@@ -48,7 +48,7 @@ namespace FA_COATING.com.amtec.forms
         private void Form1_Load(object sender, EventArgs e)
         {
             // 窗体标题显示版本信息
-            this.Text = @"三防漆 ( v" +Assembly.GetExecutingAssembly().GetName().Version+@" ) by steven";
+            this.Text = $@"三防漆 ( v{Assembly.GetExecutingAssembly().GetName().Version} ) by steven";
             if (config.LogInType == "COM")
             {
                 serialPort.PortName = config.SerialPort;
@@ -88,32 +88,30 @@ namespace FA_COATING.com.amtec.forms
                 string s = Encoding.ASCII.GetString(buffer).Trim();
                 if (s.Length <= 0)
                     return;
-                LogHelper.Info("收到扫描枪扫描信息: " + s);
+                LogHelper.Info($"Recieved Message: {s}");
                 // 更新this.textBox1显示为 s
                 this.Invoke(new MethodInvoker(delegate
                 {
                     this.textBox1.Text = s;
                 }));
-                // 使用正则 ^(.*);(.*)$|(.*)$ 校验字符串s,并取出分组值
-                //MatchCollection Matches = Regex.Matches(s, @"^(.*);(.*)$|^(.*)$");
-                MatchCollection Matches = Regex.Matches(s, config.REGEX_PATTERN);
+                // 使用正则 ^([A-Z0-9]{22})(?:;([A-Z0-9]{22}))?$ 校验字符串s,并取出分组值
+                Match match = Regex.Match(s, config.REGEX_PATTERN);
                 // 没有匹配上，直接显示错误信息
-                if (Matches.Count <= 0)
+                if (!match.Success)
                 {
-                    HandleError("扫描信息格式错误");
+                    HandleError($"扫描信息格式错误,无法解析: {s}");
                     return;
                 }
                 List<string> indata = new List<string>();
-                // 匹配上一组
-                if (Matches[0].Length<=22)
+                // 提取第一个字符串（必存在）
+                indata.Add(match.Groups[1].Value);
+
+                // 检查第二个字符串是否存在（分号后的内容）
+                if (match.Groups[2].Success)
                 {
-                    indata.Add(Matches[0].Groups[0].Value);
+                    indata.Add(match.Groups[2].Value);
                 }
-                else
-                {
-                    indata.Add(Matches[0].Groups[1].Value);
-                    indata.Add(Matches[0].Groups[2].Value);
-                }
+
 
                 // string[] indata = s.Trim().Split(new char[] { ';' }).Where(el => !string.IsNullOrEmpty(el)).ToArray();
                 string errMsg = await CheckItacStateAsync(indata);
@@ -147,7 +145,7 @@ namespace FA_COATING.com.amtec.forms
             }
             catch (Exception e)
             {
-                LogHelper.Info("串口信息获取失败:" + e);
+                LogHelper.Info($"Serial Port Open Error:{e}");
             }
 
         }
@@ -161,7 +159,7 @@ namespace FA_COATING.com.amtec.forms
                 this.textBox1.Focus();
                 this.textBox1.SelectAll();
                 this.TransferSNTOCOM(config.High);
-                LogHelper.Info("发送Low指令:" + config.High);
+                LogHelper.Info("Send High Command: " + config.High);
                 // 新增：显示置顶窗体
                 MessageForm.ShowMessage(errMsg, false);
             }));
@@ -176,7 +174,7 @@ namespace FA_COATING.com.amtec.forms
                 this.textBox1.Focus();
                 this.textBox1.SelectAll();
                 this.TransferSNTOCOM(config.Low);
-                LogHelper.Info("发送Low指令:" + config.Low);
+                LogHelper.Info("Send Low Command:" + config.Low);
 
                 // 新增：显示置顶窗体
                 MessageForm.ShowMessage(errMsg, true);
@@ -207,7 +205,7 @@ namespace FA_COATING.com.amtec.forms
             foreach (var snr in indata)
             {
                 var err = this.selectGw.GetBurn(config.DBType, config.Version, snr);
-                if (err=="ERROR")
+                if (err == "ERROR")
                 {
                     errMsg += "" + snr + "序列号获取烧录失败!";
 
@@ -236,7 +234,7 @@ namespace FA_COATING.com.amtec.forms
         {
 
             string errMsg = "";
-            LogHelper.Info("校验板子状态: " + string.Join(",", indata));
+            LogHelper.Info("Verify the status of product: " + string.Join(",", indata));
             List<Task<int>> tasks = indata.Select(snr => Task.Run(() => this.trCheckSerialNumberState(config.StationNumber, 2, 0, snr, "1"))).ToList();
             // 分别验证板子的序列号
             int[] res = await Task.WhenAll(tasks);
@@ -642,39 +640,35 @@ namespace FA_COATING.com.amtec.forms
             LogHelper.Info("Api trCheckSerialNumberState SERIAL_NUMBER =" + station_number + ", result code =" + error + " ,message =" + errorMsg);
             if (error == 0)
             {
-                LogHelper.Info(serial_number + " 防呆检查通过");
+                LogHelper.Info(serial_number + " The foolproof check has passed");
+                return error;
             }
-            else
+            if (serialNumberStateResultValues != null && serialNumberStateResultValues?.Length != 0)
             {
-                if (serialNumberStateResultValues != null || serialNumberStateResultValues?.Length != 0)
+                string snr;
+                int err;
+                int loop = serialNumberStateResultKeys.Length;
+                int count = serialNumberStateResultValues.Length;
+                if (count == 0)
                 {
-                    string snr;
-                    int err;
-                    int loop = serialNumberStateResultKeys.Length;
-                    int count = serialNumberStateResultValues.Length;
-                    if (count == 0)
+                    imsapi.imsapiGetErrorText(sessionContext, error, out errorMsg);
+                    //ErrorMSG(serial_number + " " + error + " " + errorMsg);
+                    LogHelper.Info(serial_number + " " + error + " " + errorMsg);
+                    return error;
+                }
+                for (int i = 0; i < count; i += loop)
+                {
+                    err = int.Parse(serialNumberStateResultValues[i].ToString());
+                    snr = serialNumberStateResultValues[i + 1].ToString();
+                    if (err != 0)
                     {
-                        imsapi.imsapiGetErrorText(sessionContext, error, out errorMsg);
-                        //ErrorMSG(serial_number + " " + error + " " + errorMsg);
-                        LogHelper.Info(serial_number + " " + error + " " + errorMsg);
+                        imsapi.imsapiGetErrorText(sessionContext, err, out errorMsg);
+                        ErrorMSG(snr + " " + err + " " + errorMsg);
+                        LogHelper.Info(snr + " " + err + " " + errorMsg);
                     }
                     else
                     {
-                        for (int i = 0; i < count; i += loop)
-                        {
-                            err = int.Parse(serialNumberStateResultValues[i].ToString());
-                            snr = serialNumberStateResultValues[i + 1].ToString();
-                            if (err != 0)
-                            {
-                                imsapi.imsapiGetErrorText(sessionContext, err, out errorMsg);
-                                ErrorMSG(snr + " " + err + " " + errorMsg);
-                                LogHelper.Info(snr + " " + err + " " + errorMsg);
-                            }
-                            else
-                            {
-                                LogHelper.Info(snr + " " + err);
-                            }
-                        }
+                        LogHelper.Info(snr + " " + err);
                     }
                 }
             }
